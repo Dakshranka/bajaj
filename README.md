@@ -1,6 +1,6 @@
 # BFHL REST API
 
-This is a Node.js Express REST API for the VIT Full Stack Question Paper.
+A simple Express.js API for classifying and processing input data.
 
 ## Features
 - POST `/bfhl` route for processing array data as per requirements
