@@ -1,24 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BFHL API</title>
+  <title>BFHL API Tester</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6fb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      margin-top: 40px;
+      padding: 32px 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      width: 400px;
+      max-width: 90vw;
+    }
+    h2 {
+      margin-top: 0;
+      color: #2d3a4b;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #cfd8dc;
+      padding: 8px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+    button {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 16px;
+    }
+    button:hover {
+      background: #1565c0;
+    }
+    .result {
+      background: #f1f8e9;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 0.95rem;
+      color: #333;
+      white-space: pre-wrap;
+      min-height: 40px;
+      border: 1px solid #cfd8dc;
+    }
+    .error {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #e57373;
+    }
+    .footer {
+      margin-top: 32px;
+      color: #888;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h2>Send POST to /bfhl</h2>
-  <textarea id="jsonInput" rows="6" cols="50">{ "data": ["a", "1", "334", "4", "R", "$"] }</textarea><br>
-  <button onclick="sendRequest()">Send</button>
-  <pre id="result"></pre>
+  <div class="container">
+    <h2>BFHL API Tester</h2>
+    <label for="jsonInput"><b>Request JSON:</b></label>
+    <textarea id="jsonInput" rows="6">{ "data": ["a", "1", "334", "4", "R", "$"] }</textarea>
+    <button onclick="sendRequest()">Send</button>
+    <div id="result" class="result"></div>
+  </div>
+  <div class="footer">Made for VIT Full Stack Question Paper &mdash; Daksh Ranka</div>
   <script>
     function sendRequest() {
-      const data = document.getElementById('jsonInput').value;
+      const resultDiv = document.getElementById('result');
+      let data;
+      try {
+        data = JSON.parse(document.getElementById('jsonInput').value);
+      } catch (e) {
+        resultDiv.textContent = 'Invalid JSON!';
+        resultDiv.className = 'result error';
+        return;
+      }
+      resultDiv.textContent = 'Loading...';
+      resultDiv.className = 'result';
       fetch('http://localhost:3000/bfhl', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: data
+        body: JSON.stringify(data)
       })
       .then(response => response.json())
-      .then(json => document.getElementById('result').textContent = JSON.stringify(json, null, 2))
-      .catch(err => document.getElementById('result').textContent = err);
+      .then(json => {
+        resultDiv.textContent = JSON.stringify(json, null, 2);
+        resultDiv.className = 'result';
+      })
+      .catch(err => {
+        resultDiv.textContent = 'Error: ' + err;
+        resultDiv.className = 'result error';
+      });
     }
   </script>
 </body>
