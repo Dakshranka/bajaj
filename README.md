@@ -38,17 +38,6 @@ This is a Node.js Express REST API for the VIT Full Stack Question Paper.
 2. Enter JSON data and click Send
 3. View the response below
 
-## How to Deploy (Vercel Example)
-
-1. Push your code to a public GitHub repository
-2. Go to [Vercel](https://vercel.com/)
-3. Click "New Project" and import your GitHub repo
-4. Set the root directory to `bajaj` if prompted
-5. Vercel auto-detects Node.js and deploys your API
-6. Your endpoint will be: `https://your-vercel-url.vercel.app/bfhl`
-
-**Note:** For other platforms (Railway, Render), follow similar steps: import repo, set up Node.js, and deploy.
-
 ## Example Response
 ```json
 {
