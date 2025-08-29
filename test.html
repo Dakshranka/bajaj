@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BFHL API</title>
+</head>
+<body>
+  <h2>Send POST to /bfhl</h2>
+  <textarea id="jsonInput" rows="6" cols="50">{ "data": ["a", "1", "334", "4", "R", "$"] }</textarea><br>
+  <button onclick="sendRequest()">Send</button>
+  <pre id="result"></pre>
+  <script>
+    function sendRequest() {
+      const data = document.getElementById('jsonInput').value;
+      fetch('http://localhost:3000/bfhl', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data
+      })
+      .then(response => response.json())
+      .then(json => document.getElementById('result').textContent = JSON.stringify(json, null, 2))
+      .catch(err => document.getElementById('result').textContent = err);
+    }
+  </script>
+</body>
+</html>
